@@ -1,0 +1,14 @@
+# Machine-specific
+.config/hypr/monitors.conf
+.config/hypr/workspaces.conf
+
+# Runtime state do illogical-impulse
+.config/illogical-impulse/installed_true
+.config/illogical-impulse/installed_listfile
+
+# Cache e lixo
+.config/fish/fish_variables
+**/__pycache__/
+*.pyc
+
+# Wallpaper path está hardcoded em config.json com /home/janse/ - lembre de ajustar
