@@ -63,7 +63,8 @@ $AUR_HELPER -S --needed \
     illogical-impulse-toolkit \
     illogical-impulse-widgets-lite \
     illogical-impulse-microtex-git \
-    quickshell
+    quickshell \
+    darkly-bin
 
 info "Instalando pacotes extras..."
 $AUR_HELPER -S --needed --noconfirm \
@@ -72,7 +73,10 @@ $AUR_HELPER -S --needed --noconfirm \
     bibata-cursor-theme \
     ttf-meslo-nerd \
     uwsm \
-    wofi
+    wofi \
+    dolphin \
+    kvantum \
+    kde-material-you-colors
 
 success "Pacotes instalados"
 
@@ -108,6 +112,11 @@ CONFIGS_TO_LINK=(
     ".config/hypr/hypridle.conf"
     ".config/hypr/custom"
     ".config/hypr/hyprlock"
+    # tema Qt/KDE
+    ".config/Kvantum"
+    ".config/kde-material-you-colors"
+    ".config/kdeglobals"
+    ".config/darklyrc"
     # outros configs completos
     ".config/fish"
     ".config/kitty"
