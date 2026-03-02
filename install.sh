@@ -57,18 +57,13 @@ AUR_HELPER=$(command -v paru || command -v yay)
 info "Instalando pacotes illogical-impulse..."
 $AUR_HELPER -S --needed --noconfirm \
     illogical-impulse-basic \
-    illogical-impulse-hyprland \
-    illogical-impulse-kde \
-    illogical-impulse-quickshell-git \
+    illogical-impulse-gtk \
     illogical-impulse-fonts-themes \
-    illogical-impulse-audio \
-    illogical-impulse-backlight \
-    illogical-impulse-portal \
     illogical-impulse-python \
-    illogical-impulse-screencapture \
     illogical-impulse-toolkit \
-    illogical-impulse-widgets \
-    illogical-impulse-microtex-git
+    illogical-impulse-widgets-lite \
+    illogical-impulse-microtex-git \
+    quickshell
 
 info "Instalando pacotes extras..."
 $AUR_HELPER -S --needed --noconfirm \
@@ -107,7 +102,13 @@ WORKSPACES_CONF="$CONFIG_DIR/hypr/workspaces.conf"
 # =============================================================================
 BACKUP_DIR="$HOME/.config-backup-$(date +%Y%m%d_%H%M%S)"
 CONFIGS_TO_LINK=(
-    ".config/hypr"
+    # hypr — stow folda no dir existente, lista arquivos individuais
+    ".config/hypr/hyprland.conf"
+    ".config/hypr/hyprlock.conf"
+    ".config/hypr/hypridle.conf"
+    ".config/hypr/custom"
+    ".config/hypr/hyprlock"
+    # outros configs completos
     ".config/fish"
     ".config/kitty"
     ".config/foot"
@@ -173,10 +174,27 @@ fi
 CONFIG_JSON="$CONFIG_DIR/illogical-impulse/config.json"
 if [[ -f "$CONFIG_JSON" ]]; then
     if grep -q "/home/janse/" "$CONFIG_JSON"; then
-        warn "O arquivo config.json tem o caminho do wallpaper hardcoded para /home/janse/"
-        warn "Ajuste manualmente: $CONFIG_JSON"
-        warn "  Procure por 'wallpaperPath' e atualize para seu usuário."
+        warn "config.json tem wallpaperPath hardcoded para /home/janse/"
+        warn "Ajuste: $CONFIG_JSON"
     fi
+fi
+
+HYPRLOCK_COLORS="$CONFIG_DIR/hypr/hyprlock/colors.conf"
+if [[ -f "$HYPRLOCK_COLORS" ]]; then
+    if grep -q "/home/janse/" "$HYPRLOCK_COLORS"; then
+        warn "hyprlock/colors.conf tem wallpaper path hardcoded para /home/janse/"
+        warn "Ajuste ou rode matugen para regenerar: $HYPRLOCK_COLORS"
+    fi
+fi
+
+# =============================================================================
+# 10. Limine (bootloader) — SOMENTE se quiser replicar config
+# =============================================================================
+LIMINE_SRC="$DOTFILES_DIR/etc/default/limine"
+if [[ -f "$LIMINE_SRC" ]]; then
+    warn "Config do Limine disponível em: $LIMINE_SRC"
+    warn "ATENÇÃO: contém UUID do disco original. NÃO copie sem ajustar o UUID!"
+    warn "Para aplicar manualmente: sudo cp $LIMINE_SRC /etc/default/limine"
 fi
 
 # =============================================================================
@@ -188,6 +206,8 @@ echo ""
 echo -e "Próximos passos:"
 echo -e "  1. Configure seus monitores em: ${BOLD}~/.config/hypr/monitors.conf${NC}"
 echo -e "  2. Configure workspaces em:     ${BOLD}~/.config/hypr/workspaces.conf${NC}"
-echo -e "  3. Ajuste o wallpaper path em:  ${BOLD}~/.config/illogical-impulse/config.json${NC}"
-echo -e "  4. Reinicie o sistema ou faça login no Hyprland via SDDM"
+echo -e "  3. Ajuste wallpaper paths em:   ${BOLD}~/.config/illogical-impulse/config.json${NC}"
+echo -e "                                  ${BOLD}~/.config/hypr/hyprlock/colors.conf${NC}"
+echo -e "  4. Revise e aplique o Limine:   ${BOLD}$DOTFILES_DIR/etc/default/limine${NC}"
+echo -e "  5. Reinicie o sistema ou faça login no Hyprland via SDDM"
 echo ""

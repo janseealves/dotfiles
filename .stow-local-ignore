@@ -1,0 +1,5 @@
+# Arquivos/dirs do repo que NÃO devem ser linkados para $HOME
+^install\.sh$
+^README\.md$
+^ii-sddm-theme$
+^etc$
