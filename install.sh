@@ -55,7 +55,7 @@ AUR_HELPER=$(command -v paru || command -v yay)
 # 3. Instalar pacotes
 # =============================================================================
 info "Instalando pacotes illogical-impulse..."
-$AUR_HELPER -S --needed --noconfirm \
+$AUR_HELPER -S --needed \
     illogical-impulse-basic \
     illogical-impulse-gtk \
     illogical-impulse-fonts-themes \
